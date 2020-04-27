@@ -1,0 +1,29 @@
+/* 
+ * Goodix GT9xx touchscreen driver
+ * 
+ * Copyright  (C)  2010 - 2014 Goodix. Ltd.
+ * 
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ * 
+ * This program is distributed in the hope that it will be a reference 
+ * to you, when you are integrating the GOODiX's CTP IC into your system, 
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of 
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU 
+ * General Public License for more details.
+ * 
+ */
+&soc {
+	i2c@f9927000 { /*Goodix BLSP1 QUP5 */
+		goodix_ts@5d {
+			compatible = "goodix,gt1x";
+			reg = <0x5d>;
+			interrupt-parent = <&msmgpio>;
+			interrupts = <17 0x2008>;
+			vdd_ana-supply = <&pm8226_l19>;
+			vcc_i2c-supply = <&pm8226_lvs1>;
+			goodix,rst-gpio = <&msmgpio 16 0x00>;
+			goodix,irq-gpio = <&msmgpio 17 0x00>;
+};

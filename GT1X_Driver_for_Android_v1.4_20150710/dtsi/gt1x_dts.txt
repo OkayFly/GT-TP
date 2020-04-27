@@ -1,0 +1,49 @@
+Goodix GT9xx series touch controller
+
+Required properties:
+
+ - compatible		: Should be "goodix,gt9xx", compatible with the of_match_table defined 
+                  in driver.
+ - reg			    : I2C slave address of the device.
+ - interrupt-parent	: Parent of interrupt.
+ - interrupts		: Configuration of touch panel controller interrupt
+				GPIO.
+ - irq-gpio	: Interrupt gpio which is to provide interrupts to
+				host, same as "interrupts" node.
+ - rst-gpio : Reset gpio to control the reset of chip.
+
+Optional properties:
+
+ - vdd_ana-supply	: Power supply needed to power up the device, when use
+				external regulator, do not add this property.
+ - vcc_i2c-supply	: Power source required to power up i2c bus.
+				GT9xx series can provide 1.8V from internal
+				LDO, add this properties base on hardware
+				design.
+ - goodix,cfg-group0	: Touch screen controller config data group 0. Ask vendor
+				to provide that.
+				Driver supports maximum six config groups. driver will select config group depending
+				on sensor id.
+
+ - goodix,cfg-group1	: Touch screen controller config data group 1. Ask vendor
+				to provide that.
+ - goodix,cfg-group2	: Touch screen controller config data group 2. Ask vendor
+				to provide that.
+ - goodix,cfg-group3	: Touch screen controller config data group 3. Ask vendor
+				to provide that.
+ - goodix,cfg-group4	: Touch screen controller config data group 4. Ask vendor
+				to provide that.
+ - goodix,cfg-group5	: Touch screen controller config data group 5. Ask vendor
+				to provide that.
+Example:
+	i2c@f9927000 { /*Goodix BLSP1 QUP5 */
+		goodix_ts@5d {
+			compatible = "goodix,gt1x";
+			reg = <0x5d>;
+			interrupt-parent = <&msmgpio>;
+			interrupts = <17 0x2008>;
+			vdd_ana-supply = <&pm8226_l19>;
+			vcc_i2c-supply = <&pm8226_lvs1>;
+			goodix,rst-gpio = <&msmgpio 16 0x00>;
+			goodix,irq-gpio = <&msmgpio 17 0x00>;
+};
